@@ -33,6 +33,11 @@ const formSubmitHandler = (event) => {
 };
 
 const displayRepose = function (repos, searchTerm) {
+    // check if api returned any repose
+    if (repos.length === 0) {
+        repoContainerEl.textContent = "No repositories to display ..."
+        return;
+    }
   //clear previous content
   repoContainerEl.textContent = "";
   repoSearchTerm.textContent = searchTerm;
