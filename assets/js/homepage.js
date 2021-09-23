@@ -1,5 +1,6 @@
 const userFormEl = document.querySelector("#user-form");
 const nameInputEl = document.querySelector("#username");
+let languageButtonsEl = document.querySelector("#language-buttons");
 const repoContainerEl = document.querySelector("#repos-container");
 const repoSearchTerm = document.querySelector("#repo-search-term");
 
@@ -88,4 +89,16 @@ const displayRepos = function (repos, searchTerm) {
   }
 };
 
+const buttonClickHandler = function (event) {
+  let language = event.target.getAttribute("data-language");
+
+  if (language) {
+    getFeaturedRepos(language);
+
+    // clear old content
+    repoContainerEl = "";
+  }
+};
+
 userFormEl.addEventListener("submit", formSubmitHandler);
+languageButtonsEl.addEventListener("click", buttonClickHandler);
