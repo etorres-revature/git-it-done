@@ -1,3 +1,5 @@
+let issueContainerEl = document.querySelector("#issues-container");
+
 const getRepoIssues = function (repo) {
   let apiURL = "https://api.github.com/repos/" + repo + "/issues?direction=asc";
 
@@ -16,6 +18,11 @@ const getRepoIssues = function (repo) {
 };
 
 const displayIssues = function (issues) {
+  if (issues.length === 0) {
+    issueContainerEl.textContent = "This repo has no open issues.";
+    return;
+  }
+
   for (let i = 0; i < issues.length; i++) {
     // create link element to take users to the issue on GH
     let issueEl = document.createElement("a");
@@ -25,7 +32,7 @@ const displayIssues = function (issues) {
 
     // create span to hold issue title
     let titleEl = document.createElement("span");
-    titleEl.textContent = issues[i].titleEl;
+    titleEl.textContent = issues[i].title;
 
     // append to container
     issueEl.appendChild(titleEl);
@@ -42,6 +49,8 @@ const displayIssues = function (issues) {
 
     // append to container
     issueEl.appendChild(typeEl);
+
+    issueContainerEl.appendChild(issueEl);
   }
 };
 
