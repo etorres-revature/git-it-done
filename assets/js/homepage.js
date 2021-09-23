@@ -1,8 +1,8 @@
-const userFormEl = document.querySelector("#user-form");
-const nameInputEl = document.querySelector("#username");
+let userFormEl = document.querySelector("#user-form");
+let nameInputEl = document.querySelector("#username");
 let languageButtonsEl = document.querySelector("#language-buttons");
-const repoContainerEl = document.querySelector("#repos-container");
-const repoSearchTerm = document.querySelector("#repo-search-term");
+let repoContainerEl = document.querySelector("#repos-container");
+let repoSearchTerm = document.querySelector("#repo-search-term");
 
 const getUserRepos = function (user) {
   // format the github api url
@@ -27,17 +27,26 @@ const getUserRepos = function (user) {
     });
 };
 
-const formSubmitHandler = (event) => {
-  event.preventDefault();
+const getFeaturedRepos = function (language) {
+  var apiURL =
+    "https://api.github.com/search/repositories?q=" +
+    language +
+    "+is:featured&sort=help-wanted-issues";
 
-  let username = nameInputEl.value.trim();
-
-  if (username) {
-    getUserRepos(username);
-    nameInputEl.value = "";
-  } else {
-    alert("Please enter a GitHub username.");
-  }
+  fetch(apiURL)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          displayRepos(data.items, language);
+        });
+      } else {
+        alert("Error: " + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert("Unable to connect to GitHub at this time.", error);
+      console.log(error);
+    });
 };
 
 const displayRepos = function (repos, searchTerm) {
@@ -89,6 +98,22 @@ const displayRepos = function (repos, searchTerm) {
   }
 };
 
+const formSubmitHandler = (event) => {
+  event.preventDefault();
+
+  let username = nameInputEl.value.trim();
+
+  if (username) {
+    getUserRepos(username);
+
+    //clear old content
+    repoContainerEl.textContent = "";
+    nameInputEl.value = "";
+  } else {
+    alert("Please enter a GitHub username.");
+  }
+};
+
 const buttonClickHandler = function (event) {
   let language = event.target.getAttribute("data-language");
 
@@ -96,9 +121,10 @@ const buttonClickHandler = function (event) {
     getFeaturedRepos(language);
 
     // clear old content
-    repoContainerEl = "";
+    repoContainerEl.textContent = "";
   }
 };
 
+// add event listeners to form and button container
 userFormEl.addEventListener("submit", formSubmitHandler);
 languageButtonsEl.addEventListener("click", buttonClickHandler);
