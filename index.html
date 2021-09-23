@@ -25,7 +25,26 @@
       </p>
     </header>
 
-    <main class="flex-row justify-space-between"></main>
+    <main class="flex-row justify-space-between">
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <h3 class="card-header text-upper-case">Search By UserName</h3>
+          <form class="card-body" id="user-form">
+            <label class="form-label" for="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              autofocus="true"
+              class="class-input"
+              id="username"
+            />
+            <button type="submit" class="btn">Find User</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-8"></div>
+    </main>
 
     <script src="./assets/js/homepage.js"></script>
   </body>
