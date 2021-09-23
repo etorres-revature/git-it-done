@@ -1,5 +1,7 @@
 const userFormEl = document.querySelector("#user-form");
 const nameInputEl = document.querySelector("#username");
+const repoContainerEl = document.querySelector("#repos-container");
+const repoSearchTerm = document.querySelector("#repo-search-term");
 
 const getUserRepos = function (user) {
   // format the github api url
@@ -27,8 +29,29 @@ const formSubmitHandler = (event) => {
 };
 
 const displayRepose = function (repos, searchTerm) {
-  console.log(repos);
-  console.log(searchTerm);
+  //clear previous content
+  repoContainerEl.textContent = "";
+  repoSearchTerm.textContent = searchTerm;
+
+  // loop over repos
+  for (let i = 0; i < repos.length; i++) {
+    // format repo name
+    let repoName = repos[i].owner.login + "/" + repos[i].name;
+
+    //create container for each repo
+    let repoEl = document.createElement("div");
+    repoEl.classList = "list-item flex-row justify-space-between align-center";
+
+    // create a span element to hold repository name
+    let titleEl = document.createElement("span");
+    titleEl.textContent = repoName;
+
+    //append to container
+    repoEl.appendChild(titleEl);
+
+    // append to container to the DOM
+    repoContainerEl.appendChild(repoEl);
+  }
 };
 
 userFormEl.addEventListener("submit", formSubmitHandler);
