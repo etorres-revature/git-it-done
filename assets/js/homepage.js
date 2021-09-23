@@ -1,14 +1,29 @@
-const getUserRepos = (user) => {
-  let apiURL = "https://api.github.com/users/" + user + "/repos";
+const userFormEl = document.querySelector("#user-form");
+const nameInputEl = document.querySelector("#username");
 
-  // make a request to the url
-  fetch(apiURL)
-  .then((response) => {
-      response.json();
-  })
-  .then((data) => {
-      console.log(data)
-  })
+const getUserRepos = function(user) {
+    // format the github api url
+    let apiUrl = "https://api.github.com/users/" + user + "/repos";
+  
+    // make a request to the url
+    fetch(apiUrl).then(function(response) {
+      response.json().then(function(data) {
+        console.log(data);
+      });
+    });
+  };
+
+const formSubmitHandler = (event) => {
+  event.preventDefault();
+
+  let username = nameInputEl.value.trim();
+
+  if (username) {
+    getUserRepos(username);
+    nameInputEl.value = "";
+  } else {
+    alert("Please enter a GitHub username.");
+  }
 };
 
-getUserRepos();
+userFormEl.addEventListener("submit", formSubmitHandler);
