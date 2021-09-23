@@ -12,15 +12,17 @@ const getUserRepos = function (user) {
     .then(function (response) {
       // request successful
       if (response.ok) {
-        response.json().then(function (data) {
-          displayRepose(data, user);
-        });
+        return response.json();
       } else {
         alert("Error: " + response.statusText);
       }
     })
+    .then(function (data) {
+      displayRepose(data, user);
+    })
     .catch(function (error) {
-      alert("Unable to connect to GitHub at this time.");
+      alert("Unable to connect to GitHub at this time.", error);
+      console.log(error);
     });
 };
 
