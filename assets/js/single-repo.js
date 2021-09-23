@@ -15,7 +15,8 @@ const getRepoIssues = function (repo) {
       if (response.ok) {
         return response.json();
       } else {
-        alert("There was a problem completing that request.");
+        // if no repo was given, redirect to the homepage
+        document.location.replace("./index.html");
       }
     })
     .then(function (data) {
@@ -81,7 +82,8 @@ const getRepoName = function () {
     getRepoIssues(repoName);
     repoNameEl.textContent = repoName;
   } else {
-    document.location.repolace("./index.html");
+    // if no repo given, redirect to home page
+    document.location.replace("./index.html");
   }
 };
 
