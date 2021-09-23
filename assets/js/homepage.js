@@ -1,9 +1,16 @@
-const getUserRepos = () => {
-  fetch("https://api.github.com/users/octocat/repos").then(function (response) {
-    response.json().then(function (data) {
-      console.log(data);
-    });
-  });
+const getUserRepos = (user) => {
+  let apiURL = "https://api.github.com/users/" + user + "/repos";
+
+  // make a request to the url
+  fetch(apiUrl)
+  .then((response => {
+      response.json();
+  })
+  .then((data) => {
+      console.log(data)
+  } {
+
+  })
 };
 
 getUserRepos();
