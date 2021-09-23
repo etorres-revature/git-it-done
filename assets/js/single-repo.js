@@ -72,4 +72,11 @@ const displayWarning = function (repo) {
   limitWarningEl.appendChild(linkEl);
 };
 
-getRepoIssues("facebook/react");
+const getRepoName = function () {
+  let queryString = document.location.search;
+  let repoName = queryString.split("=")[1];
+  return repoName
+};
+
+getRepoIssues(getRepoName());
+
