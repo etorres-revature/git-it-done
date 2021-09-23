@@ -8,15 +8,20 @@ const getUserRepos = function (user) {
   let apiUrl = "https://api.github.com/users/" + user + "/repos";
 
   // make a request to the url
-  fetch(apiUrl).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        displayRepose(data, user);
-      });
-    } else {
-      alert("Error: " + response.statusText);
-    }
-  });
+  fetch(apiUrl)
+    .then(function (response) {
+      // request successful
+      if (response.ok) {
+        response.json().then(function (data) {
+          displayRepose(data, user);
+        });
+      } else {
+        alert("Error: " + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert("Unable to connect to GitHub at this time.");
+    });
 };
 
 const formSubmitHandler = (event) => {
@@ -33,11 +38,11 @@ const formSubmitHandler = (event) => {
 };
 
 const displayRepose = function (repos, searchTerm) {
-    // check if api returned any repose
-    if (repos.length === 0) {
-        repoContainerEl.textContent = "No repositories to display ..."
-        return;
-    }
+  // check if api returned any repose
+  if (repos.length === 0) {
+    repoContainerEl.textContent = "No repositories to display ...";
+    return;
+  }
   //clear previous content
   repoContainerEl.textContent = "";
   repoSearchTerm.textContent = searchTerm;
