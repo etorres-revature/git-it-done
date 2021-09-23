@@ -80,6 +80,8 @@ const getRepoName = function () {
   if (repoName) {
     getRepoIssues(repoName);
     repoNameEl.textContent = repoName;
+  } else {
+    document.location.repolace("./index.html");
   }
 };
 
